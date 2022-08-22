@@ -27,7 +27,7 @@ Each repository under the hello-world-gitops organization tackles a different pi
     - OpenShift GitOps (Argo CD) configurations to deploy applications on the Dev cluster
 - gitops-stage
     - OpenShift GitOps (Argo CD) configurations to deploy applications on the Stage cluster
-- app-1-helmACM
+- app-1-helm
     - Code to deploy hello-world application
 - app-1-code
     - Code to build the hello-world application container image
