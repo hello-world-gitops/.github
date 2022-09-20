@@ -13,6 +13,38 @@ The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are
 
 **Note:** To keep this project smaller, I elected to only feature a dev and stage environment. Additional environments could be added by creating additional clusters and copying either the dev or stage resources.
 
+## Hierarchy
+
+### Clusters
+
+```mermaid
+graph TD
+	Hub --> Dev
+        Hub --> Stage
+```
+
+### Software
+
+```mermaid
+graph TD
+	ACM[Red Hat ACM] --> gitops-hub[OpenShift GitOps (Argo CD)]
+	ACM --> gitops-dev[OpenShift GitOps (Argo CD)]
+	ACM --> gitops-stage[OpenShift GitOps (Argo CD)]
+```
+
+### Repos
+
+```mermaid
+graph TD
+	bootstrap --> gitops-hub
+        bootstrap --> gitops-dev
+        bootstrap --> gitops-stage
+
+        gitops-hub --> policy[ACM Policies, Hub Applications]
+        gitops-dev --> dev-apps[Dev Applications]
+        gitops-stage --> stage-apps[Stage Applications]
+```
+
 ## Layout
 
 Each repository under the hello-world-gitops organization tackles a different piece of the GitOps puzzle.
