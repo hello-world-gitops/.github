@@ -27,9 +27,9 @@ graph TD
 
 ```mermaid
 graph TD
-	ACM[Red Hat ACM] --> gitops-hub[OpenShift GitOps (Argo CD)]
-	ACM --> gitops-dev[OpenShift GitOps (Argo CD)]
-	ACM --> gitops-stage[OpenShift GitOps (Argo CD)]
+	ACM[Red Hat ACM] --> gitops-hub["OpenShift GitOps (Argo CD)"]
+	ACM --> gitops-dev["OpenShift GitOps (Argo CD)"]
+	ACM --> gitops-stage["OpenShift GitOps (Argo CD)"]
 ```
 
 ### Repos
