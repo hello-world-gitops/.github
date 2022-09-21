@@ -19,18 +19,18 @@ The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are
 
 ```mermaid
 graph TD
-        Dev["Dev Cluster<br />(OpenShift GitOps,<br />Development Applications)"]
-        Hub["Hub Cluster<br />(Red Hat ACM, OpenShift GitOps,<br />Shared Applications)"]
-        Stage["Stage Cluster<br />(OpenShift GitOps,<br />Staging Applications)"]
+        Dev["<b>Dev OpenShift Cluster</b><br />(OpenShift GitOps,<br />Development Applications)"]
+        Hub["<b>Hub OpenShift Cluster</b><br />(Red Hat Advanced Cluster Management (ACM) for Kubernetes,<br />OpenShift GitOps, Shared Applications)"]
+        Stage["<b>Stage OpenShift Cluster</b><br />(OpenShift GitOps,<br />Staging Applications)"]
 
-        Git["Git Server<br />(GitHub, GitLab, etc.)"]
+        Git["<b>Git Server</b><br />(GitHub, GitLab, etc.)"]
 
-        Dev -. Pulls .-> Git
-        Hub -. Pulls .-> Git
-        Stage -. Pulls .-> Git
+        Dev -. "Continuously pulls<br />code from" .- Git
+        Hub -. "Continuously pulls<br />code from" .- Git
+        Stage -. "Continuously pulls<br />code from" .- Git
 
-        Hub -- Manages --> Dev
-        Hub -- Manages --> Stage
+        Hub -- Managed by ACM --> Dev
+        Hub -- Managed by ACM --> Stage
 ```
 
 ### Process Flow
@@ -38,7 +38,7 @@ graph TD
 ```mermaid
 graph TD
 	Admin["Admin 🧑‍💻"]
-	ACM[Red Hat Advanced Cluster<br />Mangement for Kubernetes]
+	ACM["Red Hat Advanced Cluster<br />Mangement (ACM) for Kubernetes"]
 
 	subgraph stage [Stage OpenShift Cluster]
 	GitOpsStage["OpenShift GitOps<br />(Argo CD)"]
