@@ -49,15 +49,15 @@ graph TD
         StageApplications["Staging Applications"]
         SharedApplications["Shared Applications"]
 
-        Admin -- "Deploys 'bootstrap' repo<br />(This only happens once, everything<br />past this point is automated" --> ACM
+        Admin -- "Manually deploys 'bootstrap' repo<br />(This only happens once, everything<br />past this point is automated)" --> ACM
 
-        ACM -- "Deploys 'gitops-hub' repo" --> GitOpsHub
-        ACM -- "Deploys 'gitops-dev' repo" --> GitOpsDev
-        ACM -- "Deploys 'gitops-stage' repo" --> GitOpsStage
+        ACM -- "Continously deploys<br />'gitops-hub' repo" --> GitOpsHub
+        ACM -- "Continously deploys<br />'gitops-dev' repo" --> GitOpsDev
+        ACM -- "Continously deploys<br />'gitops-stage' repo" --> GitOpsStage
 
-        GitOpsHub -- 'Deploys application repos' --> SharedApplications
-        GitOpsDev -- 'Deploys application repos' --> DevApplications
-        GitOpsStage -- 'Deploys application repos' --> StageApplications
+        GitOpsHub -- 'Continously deploys<br />application repos' --> SharedApplications
+        GitOpsDev -- 'Continously deploys<br />application repos' --> DevApplications
+        GitOpsStage -- 'Continously deploy<br />application repos' --> StageApplications
 ```
 
 ## Layout
