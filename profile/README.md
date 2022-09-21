@@ -39,13 +39,7 @@ graph TD
 graph TD
         Admin
 
-        BootstrapRepo["'bootstrap' Repo"]
-
         ACM
-
-        GitOpsHubRepo["'gitops-hub' repo"]
-        GitOpsDevRepo["'gitops-dev' repo"]
-        GitOpsStageRepo["'gitops-stage' repo"]
 
         GitOpsDev["OpenShift GitOps<br />Dev Cluster"]
         GitOpsStage["OpenShift GitOps<br />Stage Cluster"]
@@ -55,19 +49,15 @@ graph TD
         StageApplications["Staging Applications"]
         SharedApplications["Shared Applications"]
 
-        Admin -- Deploys --- BootstrapRepo
-        BootstrapRepo --> ACM
+        Admin -- "Deploys 'bootstrap' repo<br />(This only happens once, everything<br />past this point is automated" --> ACM
 
-        ACM -- Deploys --- GitOpsHubRepo
-        ACM -- Deploys --- GitOpsDevRepo
-        ACM -- Deploys --- GitOpsStageRepo
-        GitOpsHubRepo --> GitOpsHub
-        GitOpsDevRepo --> GitOpsDev
-        GitOpsStageRepo --> GitOpsStage
+        ACM -- "Deploys 'gitops-hub' repo" --> GitOpsHub
+        ACM -- "Deploys 'gitops-dev' repo" --> GitOpsDev
+        ACM -- "Deploys 'gitops-stage' repo" --> GitOpsStage
 
-        GitOpsHub -- Deploys --> SharedApplications
-        GitOpsDev -- Deploys --> DevApplications
-        GitOpsStage -- Deploys --> StageApplications
+        GitOpsHub -- 'Deploys application repos' --> SharedApplications
+        GitOpsDev -- 'Deploys application repos' --> DevApplications
+        GitOpsStage -- 'Deploys application repos' --> StageApplications
 ```
 
 ## Layout
