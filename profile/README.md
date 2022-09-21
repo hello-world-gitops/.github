@@ -33,7 +33,7 @@ graph TD
         Hub -- Manages --> Stage
 ```
 
-### Repos
+### Process Flow
 
 ```mermaid
 graph TD
