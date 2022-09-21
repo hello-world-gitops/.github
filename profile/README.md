@@ -21,9 +21,9 @@ The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are
 graph TD
         Hub["Hub cluster<br />(Red Hat ACM, OpenShift GitOps,<br />Shared Applications)"] -- Manages --> Dev["Dev cluster<br />(OpenShift GitOps,<br />Development Applications)"]
         Hub -- Manages --> Stage["Stage cluster<br />(OpenShift GitOps,<br />Staging Applications)"]
-        Hub -.- Git["Git Server (GitHub, GitLab, etc.)"]
         Dev -.- Git
         Stage -.- Git
+        Hub -.- Git["Git Server (GitHub, GitLab, etc.)"]
 ```
 
 ### Repos
