@@ -37,34 +37,32 @@ graph TD
 
 ```mermaid
 graph TD
-        Admin
+        Admin -. "Manually deploys 'bootstrap' repo<br />(This only happens once, everything<br />past this point is automated)" .-> ACM
 
         subgraph hub [Hub Openshift Cluster]
         ACM
         GitOpsHub["OpenShift GitOps<br />Hub Cluster"]
         SharedApplications["Shared Applications"]
+
+        ACM -- "Continously deploys<br />'gitops-hub' repo" --> GitOpsHub
+        GitOpsHub -- 'Continously deploys<br />application repos' --> SharedApplications
         end
 
         subgraph dev [Dev OpenShift Cluster]
         GitOpsDev["OpenShift GitOps<br />Dev Cluster"]
         DevApplications["Development Applications"]
+
+        ACM -- "Continously deploys<br />'gitops-dev' repo" --> GitOpsDev
+        GitOpsDev -- 'Continously deploys<br />application repos' --> DevApplications
         end
 
         subgraph stage [Stage OpenShift Cluster]
         GitOpsStage["OpenShift GitOps<br />Stage Cluster"]
         StageApplications["Staging Applications"]
-        end
-
-        Admin -. "Manually deploys 'bootstrap' repo<br />(This only happens once, everything<br />past this point is automated)" .-> ACM
-
-        ACM -- "Continously deploys<br />'gitops-hub' repo" --> GitOpsHub
-        GitOpsHub -- 'Continously deploys<br />application repos' --> SharedApplications
-
-        ACM -- "Continously deploys<br />'gitops-dev' repo" --> GitOpsDev
-        GitOpsDev -- 'Continously deploys<br />application repos' --> DevApplications
 
         ACM -- "Continously deploys<br />'gitops-stage' repo" --> GitOpsStage
         GitOpsStage -- 'Continously deploys<br />application repos' --> StageApplications
+        end
 ```
 
 ## Layout
