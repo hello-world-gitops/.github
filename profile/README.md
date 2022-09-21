@@ -55,12 +55,12 @@ graph TD
         StageApplications["Staging Applications"]
         SharedApplications["Shared Applications"]
 
-        Admin -- Deploys -- BootstrapRepo
+        Admin -- Deploys --- BootstrapRepo
         BootstrapRepo --> ACM
 
-        ACM -- Deploys -- GitOpsHubRepo
-        ACM -- Deploys -- GitOpsDevRepo
-        ACM -- Deploys -- GitOpsStageRepo
+        ACM -- Deploys --- GitOpsHubRepo
+        ACM -- Deploys --- GitOpsDevRepo
+        ACM -- Deploys --- GitOpsStageRepo
         GitOpsHubRepo --> GitOpsHub
         GitOpsDevRepo --> GitOpsDev
         GitOpsStageRepo --> GitOpsStage
