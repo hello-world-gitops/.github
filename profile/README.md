@@ -37,33 +37,35 @@ graph TD
 
 ```mermaid
 graph TD
-        Admin -. "Manually deploys 'bootstrap' repo<br />(This only happens once, everything<br />past this point is automated)" .-> ACM
+	Admin["Admin 🧑‍💻"]
+	ACM[Red Hat Advanced Cluster<br />Mangement for Kubernetes]
 
-        subgraph dev [Dev OpenShift Cluster]
-        GitOpsDev["OpenShift GitOps<br />Dev Cluster"]
-        DevApplications["Development Applications"]
+	subgraph stage [Stage OpenShift Cluster]
+	GitOpsStage["OpenShift GitOps<br />(Argo CD)"]
+	StageApplications["Staging Applications"]
+	end
 
-        ACM -- "Continously deploys<br />'gitops-dev' repo" --> GitOpsDev
-        GitOpsDev -- 'Continously deploys<br />application repos' --> DevApplications
-        end
+	subgraph hub [Hub Openshift Cluster]
+	ACM
+	GitOpsHub["OpenShift GitOps<br />(Argo CD)"]
+	SharedApplications["Shared Applications"]
+	end
 
+	subgraph dev [Dev OpenShift Cluster]
+	GitOpsDev["OpenShift GitOps<br />(Argo CD)"]
+	DevApplications["Development Applications"]
+	end
 
-        subgraph hub [Hub Openshift Cluster]
-        ACM
-        GitOpsHub["OpenShift GitOps<br />Hub Cluster"]
-        SharedApplications["Shared Applications"]
+	Admin -. "Manually deploys 'bootstrap' repo<br />(This only happens once, everything<br />past this point is automated)" .-> ACM
 
-        ACM -- "Continously deploys<br />'gitops-hub' repo" --> GitOpsHub
-        GitOpsHub -- 'Continously deploys<br />application repos' --> SharedApplications
-        end
+	ACM -- "Continously deploys<br />'gitops-hub' repo" --> GitOpsHub
+	GitOpsHub -- "Continously deploys<br />application repos" --> SharedApplications
 
-        subgraph stage [Stage OpenShift Cluster]
-        GitOpsStage["OpenShift GitOps<br />Stage Cluster"]
-        StageApplications["Staging Applications"]
+	ACM -- "Continously deploys<br />'gitops-dev' repo" --> GitOpsDev
+	GitOpsDev -- "Continously deploys<br />application repos" --> DevApplications
 
-        ACM -- "Continously deploys<br />'gitops-stage' repo" --> GitOpsStage
-        GitOpsStage -- 'Continously deploys<br />application repos' --> StageApplications
-        end
+	ACM -- "Continously deploys<br />'gitops-stage' repo" --> GitOpsStage
+	GitOpsStage -- "Continously deploys<br />application repos" --> StageApplications
 ```
 
 ## Layout
