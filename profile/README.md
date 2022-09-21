@@ -25,13 +25,12 @@ graph TD
 
         Git["Git Server<br />(GitHub, GitLab, etc.)"]
 
-        Dev -. Pulls .-> Git
-        Hub -. Pulls .-> Git
-        Stage -. Pulls .-> Git
-
         Hub -- Manages --> Dev
         Hub -- Manages --> Stage
 
+        Dev -. Pulls .-> Git
+        Hub -. Pulls .-> Git
+        Stage -. Pulls .-> Git
 ```
 
 ### Repos
