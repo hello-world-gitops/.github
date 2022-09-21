@@ -19,8 +19,8 @@ The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are
 
 ```mermaid
 graph TD
-        Hub["Hub cluster<br />(ACM, Quay)"] --> Dev["Dev cluster<br />(Development Applications)"]
-        Hub --> Stage["Stage cluster<br />(Staging Applications)"]
+        Hub["Hub cluster<br />(Red Hat ACM, Quay,<br />OpenShift GitOps)"] --> Dev["Dev cluster<br />(OpenShift GitOps,<br />Development Applications)"]
+        Hub --> Stage["Stage cluster<br />(OpenShift GitOps,<br />Staging Applications)"]
 ```
 
 ### Software
