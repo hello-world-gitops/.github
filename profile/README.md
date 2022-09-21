@@ -19,9 +19,9 @@ The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are
 
 ```mermaid
 graph TD
-        Dev["Dev cluster<br />(OpenShift GitOps,<br />Development Applications)"]
-        Hub["Hub cluster<br />(Red Hat ACM, OpenShift GitOps,<br />Shared Applications)"]
-        Stage["Stage cluster<br />(OpenShift GitOps,<br />Staging Applications)"]
+        Dev["Dev Cluster<br />(OpenShift GitOps,<br />Development Applications)"]
+        Hub["Hub Cluster<br />(Red Hat ACM, OpenShift GitOps,<br />Shared Applications)"]
+        Stage["Stage Cluster<br />(OpenShift GitOps,<br />Staging Applications)"]
 
         Git["Git Server<br />(GitHub, GitLab, etc.)"]
 
@@ -37,13 +37,37 @@ graph TD
 
 ```mermaid
 graph TD
-	bootstrap --> gitops-hub
-        bootstrap --> gitops-dev
-        bootstrap --> gitops-stage
+        Admin
 
-        gitops-hub --> policy[ACM Policies, Hub Applications]
-        gitops-dev --> dev-apps[Dev Applications]
-        gitops-stage --> stage-apps[Stage Applications]
+        BootstrapRepo["'bootstrap' Repo"]
+
+        ACM
+
+        GitOpsHubRepo["'gitops-hub' repo"]
+        GitOpsDevRepo["'gitops-dev' repo"]
+        GitOpsStageRepo["'gitops-stage' repo"]
+
+        GitOpsDev["OpenShift GitOps<br />Dev Cluster"]
+        GitOpsStage["OpenShift GitOps<br />Stage Cluster"]
+        GitOpsHub["OpenShift GitOps<br />Hub Cluster"]
+
+        DevApplications["Development Applications"]
+        StageApplications["Staging Applications"]
+        SharedApplications["Shared Applications"]
+
+        Admin -- Deploys -- BootstrapRepo
+        BootstrapRepo --> ACM
+
+        ACM -- Deploys -- GitOpsHubRepo
+        ACM -- Deploys -- GitOpsDevRepo
+        ACM -- Deploys -- GitOpsStageRepo
+        GitOpsHubRepo --> GitOpsHub
+        GitOpsDevRepo --> GitOpsDev
+        GitOpsStageRepo --> GitOpsStage
+
+        GitOpsHub -- Deploys --> SharedApplications
+        GitOpsDev -- Deploys --> DevApplications
+        GitOpsStage -- Deploys --> StageApplications
 ```
 
 ## Layout
