@@ -15,8 +15,6 @@ The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are
 
 ## Hierarchy
 
-### Clusters
-
 ```mermaid
 graph TD
         Dev["<b>Dev OpenShift Cluster</b><br />(OpenShift GitOps,<br />Development Applications)"]
@@ -33,7 +31,7 @@ graph TD
         Hub -- Managed by ACM --> Stage
 ```
 
-### Process Flow
+## Process Flow
 
 ```mermaid
 graph TD
