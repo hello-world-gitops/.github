@@ -22,7 +22,7 @@ graph TD
         Hub["Hub cluster<br />(Red Hat ACM, OpenShift GitOps,<br />Shared Applications)"] -- Manages --> Dev["Dev cluster<br />(OpenShift GitOps,<br />Development Applications)"]
         Hub -- Manages --> Stage["Stage cluster<br />(OpenShift GitOps,<br />Staging Applications)"]
         Dev -. Pulls .- Git
-        Hub -. Pulls .- Git["Git Server (GitHub, GitLab, etc.)"]
+        Hub -. Pulls .- Git["Git Server<br />(GitHub, GitLab, etc.)"]
         Stage -. Pulls .- Git
 ```
 
