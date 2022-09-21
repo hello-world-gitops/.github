@@ -23,15 +23,6 @@ graph TD
         Hub -- Manages --> Stage["Stage cluster<br />(OpenShift GitOps,<br />Staging Applications)"]
 ```
 
-### Software
-
-```mermaid
-graph TD
-	ACM[Red Hat ACM] --> gitops-hub["OpenShift GitOps (Argo CD)"]
-	ACM --> gitops-dev["OpenShift GitOps (Argo CD)"]
-	ACM --> gitops-stage["OpenShift GitOps (Argo CD)"]
-```
-
 ### Repos
 
 ```mermaid
