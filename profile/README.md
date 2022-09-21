@@ -19,8 +19,8 @@ The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are
 
 ```mermaid
 graph TD
-        Hub[Hub cluster\nACM, Quay] --> Dev[Dev cluster\nDevelopment Applications]
-        Hub --> Stage[Stage cluster\nStaging Applications]
+        Hub[Hub cluster<br />ACM, Quay] --> Dev[Dev cluster<br />Development Applications]
+        Hub --> Stage[Stage cluster<br />Staging Applications]
 ```
 
 ### Software
