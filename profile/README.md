@@ -39,18 +39,18 @@ graph TD
 graph TD
         Admin
 
-        subchart hub[Hub Openshift Cluster]
+        subchart hub [Hub Openshift Cluster]
         ACM
         GitOpsHub["OpenShift GitOps<br />Hub Cluster"]
         SharedApplications["Shared Applications"]
         end
 
-        subchart dev[Dev OpenShift Cluster]
+        subchart dev [Dev OpenShift Cluster]
         GitOpsDev["OpenShift GitOps<br />Dev Cluster"]
         DevApplications["Development Applications"]
         end
 
-        subchart stage[Stage OpenShift Cluster]
+        subchart stage [Stage OpenShift Cluster]
         GitOpsStage["OpenShift GitOps<br />Stage Cluster"]
         StageApplications["Staging Applications"]
         end
