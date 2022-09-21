@@ -1,19 +1,23 @@
 # Hello World: GitOps
 
-This organization contains an end-to-end GitOps reference architecture for an **Everything-as-Code** fleet of Red Hat OpenShift clusters. The repos in this org demonstrate how your code repositories can be composed and used. **This is not a one-solution-fits-all architecture.** This is a reference architecture you can review and either fork the repos to your create your own, or reference pieces of the architecture as your create your own.
+This organization contains an end-to-end GitOps reference architecture for an **Everything-as-Code** fleet of Red Hat OpenShift clusters.
+The repos in this org are meant to demonstrate how an organization can manage their code repositories to support a GitOps deployment pattern.
+**This is not a one-solution-fits-all architecture.**
+This is a reference architecture you can review and either fork the repos or reference pieces of the architecture as your create your own solution.
 
 Hello World GitOps uses the following products:
 
 * Red Hat OpenShift Container Platform
-* Red Hat Advanced Cluster Management for Kubernetes
-* Red Hat Quay
+* Red Hat Advanced Cluster Management (ACM) for Kubernetes
 * Red Hat OpenShift GitOps (Argo CD)
 
-The reference architecture has 3 clusters: Hub, Dev, and Stage. ACM and Quay are deployed to Hub. Dev hosts development applications. Stage hosts staging applications.
+The reference architecture has 3 OpenShift clusters: Dev, Stage, and Hub.
+Dev and Stage host development and staging applications respectively.
+Hub hosts ACM and manages the Dev and Stage clusters.
+Additionally Hub should be used to host other shared applications (think artifact registry, container registry, secret server, etc.).
 
-**Note:** To keep this project smaller, I elected to only feature a dev and stage environment. Additional environments could be added by creating additional clusters and copying either the dev or stage resources.
-
-## Hierarchy
+**NOTE:** To keep this project smaller, I elected to only feature a dev and stage environment.
+Additional environments could be implemented following the same pattern that dev and stage use.
 
 ```mermaid
 graph TD
@@ -31,7 +35,14 @@ graph TD
         Hub -- Managed by ACM --> Stage
 ```
 
-## Process Flow
+All configuration is managed as code in Git repositories.
+
+OpenShift GitOps is deployed to all three clusters.
+Applications are deployed to the clusters through the default cluster Argo instance that OpenShift GitOps provides.
+The Argo AppProject and Application configurations for all applications in a given cluster are stored in the *gitops-clustername* repo.
+For example, the configuration to deploy all development applications is in the *gitops-dev* repo.
+
+The GitOps repo for each cluster is deployed by ACM from the Hub cluster.
 
 ```mermaid
 graph TD
@@ -72,38 +83,53 @@ Each repository under the hello-world-gitops organization tackles a different pi
 
 - bootstrap
     - Bootstraps the Red Hat OpenShift multi-cluster fleet using Red Hat Advanced Cluster Management (ACM)
-- policy
-    - Red Hat Advanced Cluster Management (ACM) policies supporting the hello-world-gitops fleet
-- gitops-hub
-    - OpenShift GitOps (Argo CD) configurations to deploy applications on the Hub cluster
 - gitops-dev
     - OpenShift GitOps (Argo CD) configurations to deploy applications on the Dev cluster
 - gitops-stage
     - OpenShift GitOps (Argo CD) configurations to deploy applications on the Stage cluster
+- gitops-hub
+    - OpenShift GitOps (Argo CD) configurations to deploy applications on the Hub cluster
+
+Still fleshing these repos out...
+<s>
+- policy
+    - Red Hat Advanced Cluster Management (ACM) policies supporting the hello-world-gitops fleet
 - app-1-helm
     - Code to deploy hello-world application
 - app-1-code
     - Code to build the hello-world application container image
+</s>
 
-**All repos in the hello-world-gitops org are subject to change. Do not point your deployments to these repos.** If you want to take any pieces of hello-world-gitops, fork the repos and deploy those.
+**NOTE: All repos in the hello-world-gitops org are subject to change.
+Do not point your deployments to these repos.**
+If you want to take any pieces of hello-world-gitops, fork the repos and deploy those to your clusters.
 
-## Prerequisites
+## Deploying
 
-To deploy, you will need 3 OpenShift clusters. There is too much variability in OpenShift installation between different platforms to include in this project so it’s BYOC (bring your own clusters).
+**I don't expect anyone to actually deploy this from GitHub.**
+These repos exist to demonstrate how to configure an OpenShift fleet using the GitOps pattern.
+I would recommend taking a look at the repos individually and adding pieces from them into your solution as needed.
+If you're at square one and need a place to start, feel free clone the repos in this org and use the reference architecture as is.
 
-The clusters can be standard 5+ node clusters, hyper-converged 3 node clusters, or single-node OpenShift (SNO) clusters.
+To deploy, you will need 3 OpenShift clusters.
+They can be Single-Node OpenShift (SNO) deployments if you're testing things out.
 
-Designate the role for each cluster: hub, dev, and stage.
-
-- Install ACM on the hub cluster through OperatorHub. - Create a multi-cluster hub (operator install walks you through this).
-- Import (or create) the other two clusters in ACM
-
-At this stage you should have 3 clusters: hub, dev, and stage. The hub cluster should have ACM installed and should be managing the other two clusters. 
-
-### Deploying
+Install ACM on the Hub cluster and import the other two clusters.
+Make sure the clusters are named dev and stage in ACM.
+(The hub cluster in ACM will always be called *local-cluster*.)
 
 - Log into the hub cluster with `oc`
 - Clone the bootstrap repo
 - Run `make install`
 
-The bootstrap repo will create ACM applications for policy, gitops-hub, gitops-dev, and gitops-stage. Policies will be deployed and enforced on the managed clusters. The Argo CD resources deployed by the gitops repos will deploy applications through OpenShift GitOps on each of the clusters.
+The bootstrap repo will create the necessary ACM applications, which will create Argo projects on the clusters, which will deploy applications.
+
+## FAQ
+
+### Will this architecture work for an organization that scales across multiple clusters per environment?
+
+Redundant, geographically distributed environments could be implemented following a similar pattern to dev/stage.
+For example, if an organization has an east and west cluster for their stage environment, the resources for stage in this reference architecture could be duplicated as *stage-east* and *stage-west*.
+
+This architecture may not be feasible for a large number of clusters per environment due to the amount of configuration required.
+For example, if an organization has 400 edge clusters for their stage environment, they would need to manage 400 GitOps (Argo configuration) repos.
