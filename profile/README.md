@@ -14,7 +14,7 @@ Hello World GitOps uses the following products:
 The reference architecture has 3 OpenShift clusters: Dev, Stage, and Hub.
 Dev and Stage host development and staging applications respectively.
 Hub hosts ACM and manages the Dev and Stage clusters.
-Additionally Hub should be used to host other shared applications (think artifact registry, container registry, secret server, etc.).
+Additionally, Hub should be used to host other shared applications (think artifact registry, container registry, secret server, etc.).
 
 **NOTE:** To keep this project smaller, I elected to only feature a dev and stage environment.
 Additional environments could be implemented following the same pattern that dev and stage use.
@@ -27,18 +27,18 @@ graph TD
 
         Git["<b>Git Server</b><br />(GitHub, GitLab, etc.)"]
 
-        Dev -. "Continuously pulls<br />code from" .- Git
-        Hub -. "Continuously pulls<br />code from" .- Git
-        Stage -. "Continuously pulls<br />code from" .- Git
+        Dev -. "Continuously<br />pulls code" .- Git
+        Hub -. "Continuously<br />pulls code" .- Git
+        Stage -. "Continuously<br />pulls code" .- Git
 
         Hub -- Managed by ACM --> Dev
         Hub -- Managed by ACM --> Stage
 ```
 
-All configuration is managed as code in Git repositories.
+**All cluster and application configuration should be managed as code in Git repositories stored in a central Git server (GitHub, GitLab, etc.).**
 
 OpenShift GitOps is deployed to all three clusters.
-Applications are deployed to the clusters through the default cluster Argo instance that OpenShift GitOps provides.
+Applications are deployed to the clusters through the default cluster-wide Argo CD instance that OpenShift GitOps provides.
 The Argo AppProject and Application configurations for all applications in a given cluster are stored in the *gitops-clustername* repo.
 For example, the configuration to deploy all development applications is in the *gitops-dev* repo.
 
