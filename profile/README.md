@@ -1,4 +1,4 @@
-# Hello OpenShift: Multi-Cluster GitOps
+![Hello OpenShift: Multi-Cluster GitOps](https://raw.githubusercontent.com/hello-openshift-multicluster-gitops/.github/main/profile/cover.png)
 
 This organization contains an end-to-end, **Everything-as-Code** reference architecture for multi-cluster management of Red Hat OpenShift.
 The repos in this org are meant to demonstrate how an organization can manage their code repositories to support a GitOps deployment pattern for cluster configurations and applications.
