@@ -151,9 +151,9 @@ For example, if an organization has 400 edge clusters for their stage environmen
 [Red Hat Advanced Cluster Management (ACM) for Kubernetes]: https://www.redhat.com/en/technologies/management/advanced-cluster-management
 [Red Hat OpenShift Container Platform]: https://docs.openshift.com/container-platform/latest
 [Red Hat OpenShift GitOps (Argo CD)]: https://docs.openshift.com/container-platform/latest/cicd/gitops/gitops-release-notes.html
-[bootstrap]: https://github.com/hello-world-gitops/bootstrap
-[gitops-dev]: https://github.com/hello-world-gitops/gitops-dev
-[gitops-hub]: https://github.com/hello-world-gitops/gitops-hub
-[gitops-stage]: https://github.com/hello-world-gitops/gitops-stage
-[policy]: https://github.com/hello-world-gitops/policy
-[theme-park-api-chart]: https://github.com/hello-world-gitops/theme-park-api-chart
+[bootstrap]: https://github.com/hello-openshift-multicluster-gitops/bootstrap
+[gitops-dev]: https://github.com/hello-openshift-multicluster-gitops/gitops-dev
+[gitops-hub]: https://github.com/hello-openshift-multicluster-gitops/gitops-hub
+[gitops-stage]: https://github.com/hello-openshift-multicluster-gitops/gitops-stage
+[policy]: https://github.com/hello-openshift-multicluster-gitops/policy
+[theme-park-api-chart]: https://github.com/hello-openshift-multicluster-gitops/theme-park-api-chart
