@@ -66,6 +66,7 @@ graph TD
 	ACM
 	GitOpsHub["OpenShift GitOps<br />(Argo CD)"]
 	SharedApplications["Shared Applications"]
+	ACMPolicies["ACM Policies"]
 	end
 
 	subgraph dev [Dev OpenShift Cluster]
@@ -77,6 +78,7 @@ graph TD
 
 	ACM -- "Continously deploys<br />'gitops-hub' repo" --> GitOpsHub
 	GitOpsHub -- "Continously deploys<br />application repos" --> SharedApplications
+	GitOpsHub -- "Continously deploys<br />'policy' repo" --> ACMPolicies
 
 	ACM -- "Continously deploys<br />'gitops-dev' repo" --> GitOpsDev
 	GitOpsDev -- "Continously deploys<br />application repos" --> DevApplications
