@@ -41,13 +41,13 @@ graph TD
 ```
 
 **NOTE:** To keep this project smaller, I elected to only feature a dev and stage environment.
-Additional environments could be implemented following the same pattern that dev and stage use.
+Additional environments can be implemented following the same pattern that dev and stage use.
 
 **All cluster and application configuration is be managed as code in Git repositories stored in a central Git server (GitHub, GitLab, etc.).**
 
 OpenShift GitOps is deployed to all three clusters.
 Applications are deployed to the clusters through the default cluster-wide Argo CD instance that OpenShift GitOps provides.
-The Argo AppProject and Application configurations for all applications in a given cluster are stored in the *gitops-clustername* repo.
+The Argo CD AppProject and Application configurations for all applications in a given cluster are stored in the *gitops-clustername* repo.
 For example, the configuration to deploy all development applications is in the *gitops-dev* repo.
 
 The GitOps repo for each cluster is deployed by ACM from the Hub cluster.
@@ -107,7 +107,7 @@ If you want to use any code in these repos, fork the repos and deploy those to y
 - [gitops-stage]
     - OpenShift GitOps (Argo CD) configurations to deploy applications on the Stage cluster
 
-### Policy
+### ACM Governance Policy
 
 - [policy]
     - Red Hat Advanced Cluster Management (ACM) for Kubernetes governance policies for all clusters
@@ -120,22 +120,23 @@ If you want to use any code in these repos, fork the repos and deploy those to y
 ## Deploying
 
 **I don't expect anyone to actually deploy this from GitHub.**
-These repos exist to demonstrate how to configure an OpenShift fleet using the GitOps pattern.
+
+These repos exist to demonstrate how to configure multi-cluster management of OpenShift clusters using the GitOps pattern.
 I would recommend taking a look at the repos individually and adding pieces from them into your solution as needed.
 If you're at square one and need a place to start, feel free clone the repos in this org and use the reference architecture as is.
 
 To deploy, you will need 3 OpenShift clusters.
-They can be Single-Node OpenShift (SNO) deployments if you're testing things out.
+I use Single-Node OpenShift (SNO) deployments to test things out.
 
-Install ACM on the Hub cluster and import the other two clusters.
-Make sure the clusters are named dev and stage in ACM.
-(The hub cluster in ACM will always be called *local-cluster*.)
+Install ACM on the Hub cluster and import the other two clusters (or create the clusters from ACM, your call 🤷.
+Make sure the clusters are named `dev` and `stage` in ACM.
+(The hub cluster in ACM will always be called `local-cluster`.)
 
 - Log into the hub cluster with `oc`
 - Clone the bootstrap repo
 - Run `make install`
 
-The bootstrap repo will create the necessary ACM applications, which will create Argo projects on the clusters, which will deploy applications.
+The bootstrap repo will create the necessary ACM subscriptions, which will create Argo projects on the clusters, which will deploy applications!
 
 ## FAQ
 
