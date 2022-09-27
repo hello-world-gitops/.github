@@ -1,23 +1,28 @@
-# Hello World: GitOps
+# Hello OpenShift: Multi-Cluster GitOps
 
-This organization contains an end-to-end GitOps reference architecture for an **Everything-as-Code** fleet of Red Hat OpenShift clusters.
-The repos in this org are meant to demonstrate how an organization can manage their code repositories to support a GitOps deployment pattern.
+This organization contains an end-to-end, **Everything-as-Code** reference architecture for multi-cluster management of Red Hat OpenShift.
+The repos in this org are meant to demonstrate how an organization can manage their code repositories to support a GitOps deployment pattern for cluster configurations and applications.
+
 **This is not a one-solution-fits-all architecture.**
+
 This is a reference architecture you can review and either fork the repos or reference pieces of the architecture as your create your own solution.
 
-Hello World GitOps uses the following products:
+**The reference architecture does not include deployment of OpenShift onto any platform.**
 
-* Red Hat OpenShift Container Platform
-* Red Hat Advanced Cluster Management (ACM) for Kubernetes
-* Red Hat OpenShift GitOps (Argo CD)
+Everything in this organization for day 2, post-install configuration and management of all OpenShift clusters.
+
+## Architecture Breakdown
+
+The reference architecture uses the following products:
+
+* [Red Hat OpenShift Container Platform]
+* [Red Hat Advanced Cluster Management (ACM) for Kubernetes]
+* [Red Hat OpenShift GitOps (Argo CD)]
 
 The reference architecture has 3 OpenShift clusters: Dev, Stage, and Hub.
 Dev and Stage host development and staging applications respectively.
 Hub hosts ACM and manages the Dev and Stage clusters.
-Additionally, Hub should be used to host other shared applications (think artifact registry, container registry, secret server, etc.).
-
-**NOTE:** To keep this project smaller, I elected to only feature a dev and stage environment.
-Additional environments could be implemented following the same pattern that dev and stage use.
+Additionally, Hub should be used to host other shared applications (artifact registry, container registry, secret server, etc.).
 
 ```mermaid
 graph TD
@@ -35,7 +40,10 @@ graph TD
         Hub -- Managed by ACM --> Stage
 ```
 
-**All cluster and application configuration should be managed as code in Git repositories stored in a central Git server (GitHub, GitLab, etc.).**
+**NOTE:** To keep this project smaller, I elected to only feature a dev and stage environment.
+Additional environments could be implemented following the same pattern that dev and stage use.
+
+**All cluster and application configuration is be managed as code in Git repositories stored in a central Git server (GitHub, GitLab, etc.).**
 
 OpenShift GitOps is deployed to all three clusters.
 Applications are deployed to the clusters through the default cluster-wide Argo CD instance that OpenShift GitOps provides.
@@ -77,32 +85,37 @@ graph TD
 	GitOpsStage -- "Continously deploys<br />application repos" --> StageApplications
 ```
 
-## Layout
+## Git Repositories
 
-Each repository under the hello-world-gitops organization tackles a different piece of the GitOps puzzle.
+All repositories under this organization support the reference architecture.
 
-- bootstrap
-    - Bootstraps the Red Hat OpenShift multi-cluster fleet using Red Hat Advanced Cluster Management (ACM)
-- gitops-dev
+**NOTE: All repos under this organization are subject to change.
+Do not point your deployments to these repos!**
+If you want to use any code in these repos, fork the repos and deploy those to your clusters.
+
+### Bootstrap
+
+- [bootstrap]
+    - Bootstrap multi-cluster management of Red Hat OpenShift through Red Hat Advanced Cluster Management (ACM) for Kubernetes
+
+### Per-Cluster GitOps (Argo CD) Configurations
+
+- [gitops-dev]
     - OpenShift GitOps (Argo CD) configurations to deploy applications on the Dev cluster
-- gitops-stage
-    - OpenShift GitOps (Argo CD) configurations to deploy applications on the Stage cluster
-- gitops-hub
+- [gitops-hub]
     - OpenShift GitOps (Argo CD) configurations to deploy applications on the Hub cluster
+- [gitops-stage]
+    - OpenShift GitOps (Argo CD) configurations to deploy applications on the Stage cluster
 
-Still fleshing these repos out...
-<s>
-- policy
-    - Red Hat Advanced Cluster Management (ACM) policies supporting the hello-world-gitops fleet
-- app-1-helm
-    - Code to deploy hello-world application
-- app-1-code
-    - Code to build the hello-world application container image
-</s>
+### Policy
 
-**NOTE: All repos in the hello-world-gitops org are subject to change.
-Do not point your deployments to these repos.**
-If you want to take any pieces of hello-world-gitops, fork the repos and deploy those to your clusters.
+- [policy]
+    - Red Hat Advanced Cluster Management (ACM) for Kubernetes governance policies for all clusters
+
+### Example Application
+
+- [theme-park-api-chart]
+    - Helm chart to deploy an example REST API. This is deployed to the dev and stage environments through OpenShift GitOps (Argo CD).
 
 ## Deploying
 
@@ -133,3 +146,13 @@ For example, if an organization has an east and west cluster for their stage env
 
 This architecture may not be feasible for a large number of clusters per environment due to the amount of configuration required.
 For example, if an organization has 400 edge clusters for their stage environment, they would need to manage 400 GitOps (Argo configuration) repos.
+
+[Red Hat Advanced Cluster Management (ACM) for Kubernetes]: https://www.redhat.com/en/technologies/management/advanced-cluster-management
+[Red Hat OpenShift Container Platform]: https://docs.openshift.com/container-platform/latest
+[Red Hat OpenShift GitOps]: https://docs.openshift.com/container-platform/latest/cicd/gitops/gitops-release-notes.html
+[bootstrap]: https://github.com/hello-world-gitops/bootstrap
+[gitops-dev]: https://github.com/hello-world-gitops/gitops-dev
+[gitops-hub]: https://github.com/hello-world-gitops/gitops-hub
+[gitops-stage]: https://github.com/hello-world-gitops/gitops-stage
+[policy]: https://github.com/hello-world-gitops/policy
+[theme-park-api-chart]: https://github.com/hello-world-gitops/theme-park-api-chart
