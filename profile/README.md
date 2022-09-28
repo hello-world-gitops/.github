@@ -43,14 +43,37 @@ graph TD
 **NOTE:** To keep this project smaller, I elected to only feature a dev and stage environment.
 Additional environments can be implemented following the same pattern that dev and stage use.
 
-**All cluster and application configuration is be managed as code in Git repositories stored in a central Git server (GitHub, GitLab, etc.).**
+**All cluster and application configuration is managed as code in Git repositories stored in a central Git server (GitHub, GitLab, etc.).**
 
-OpenShift GitOps is deployed to all three clusters.
-Applications are deployed to the clusters through the default cluster-wide Argo CD instance that OpenShift GitOps provides.
+[Helm] is used extensively throughout the Git repos in this organization.
+Helm charts allow for YAML manifests to be templated and looped over.
+This enables cluster administrators to easily make changes through variables in the *Values.yaml* file in each repo instead of directly as YAML in Kubernetes manifests.
+
+The Helm charts in each Git repo are deployed through OpenShift GitOps (Argo CD).
+OpenShift GitOps is deployed to all three clusters through an ACM governance policy.
+OpenShift GitOps creates a cluster-wide Argo CD instance in the `openshift-gitops` namespace which is used to deploy applications to the cluster.
+
+Argo CD is configured through Kubernetes manifests.
+It provides two *Custom Resources* to configure applications for continuous deployment.
+
+An Argo CD *AppProject* is a group of applications that Argo CD manages.
+It includes the metadata about the group of applications.
+This reference architecture expects that an Argo CD AppProject match 1:1 with an OpenShift Namespace (Project).
+Any applications deployed into the same namespace should be included in the same AppProject.
+
+An Argo CD *Application* contains configurations for a single application that Argo CD manages.
+It includes the Git repo URL, Git branch to deploy, OpenShift namespace to deploy into, etc.
+The Git repo for the application being deployed can contain straight YAML manifests, Kustomize, or Helm charts.
+(The example applications in this organization are Helm Charts.)
+
 The Argo CD AppProject and Application configurations for all applications in a given cluster are stored in the *gitops-clustername* repo.
-For example, the configuration to deploy all development applications is in the *gitops-dev* repo.
+For example, the configuration to deploy all development applications is in the [gitops-dev] repo.
+*theme-park-api-dev* is an AppProject and OpenShift Namespace that will be deployed from that repo.
+There are three Applications that will be deployed to the AppProject/Namespace: *hershey-park-dev*, *kings-dominion-dev*, and *six-flags-dev.*
+Each of the above applications is deployed from Helm charts in [this repo][theme-park-api-chart].
 
-The GitOps repo for each cluster is deployed by ACM from the Hub cluster.
+The GitOps repo for each cluster is continuously deployed through an ACM Subscription (Application) on the Hub cluster.
+The ACM subscription is created through a one-time bootstrapping process that kicks off GitOps configuration and management across the clusters.
 
 ```mermaid
 graph TD
@@ -150,6 +173,8 @@ For example, if an organization has an east and west cluster for their stage env
 This architecture may not be feasible for a large number of clusters per environment due to the amount of configuration required.
 For example, if an organization has 400 edge clusters for their stage environment, they would need to manage 400 GitOps (Argo configuration) repos.
 
+[AppProject Example]: https://github.com/hello-openshift-multicluster-gitops/gitops-dev/blob/main/values.yaml
+[Helm]: https://helm.sh/
 [Red Hat Advanced Cluster Management (ACM) for Kubernetes]: https://www.redhat.com/en/technologies/management/advanced-cluster-management
 [Red Hat OpenShift Container Platform]: https://docs.openshift.com/container-platform/latest
 [Red Hat OpenShift GitOps (Argo CD)]: https://docs.openshift.com/container-platform/latest/cicd/gitops/gitops-release-notes.html
