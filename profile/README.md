@@ -1,15 +1,21 @@
-![Hello OpenShift: Multi-Cluster GitOps](https://raw.githubusercontent.com/hello-openshift-multicluster-gitops/.github/main/profile/cover.png)
+# OpenShift Multi-Cluster GitOps
 
 This organization contains an end-to-end, **Everything-as-Code** reference architecture for multi-cluster management of Red Hat OpenShift.
 The repos in this org are meant to demonstrate how an organization can manage their code repositories to support a GitOps deployment pattern for cluster configurations and applications.
 
-**This is not a one-solution-fits-all architecture.**
+**This is not a one-solution-fits-all architecture.** This is a reference architecture you can review and either fork the repos or reference pieces of the architecture as your create your own solution.
 
-This is a reference architecture you can review and either fork the repos or reference pieces of the architecture as your create your own solution.
+**The reference architecture does not include deployment of OpenShift onto any platform.** Everything in this organization for day 2, post-install configuration and management of all OpenShift clusters.
 
-**The reference architecture does not include deployment of OpenShift onto any platform.**
+## Before Jumping In
 
-Everything in this organization for day 2, post-install configuration and management of all OpenShift clusters.
+**If you are starting from scratch, I recommend using [Hybrid Cloud Patterns] instead of this reference architecture for a couple reasons:**
+
+* [Multicloud GitOps] is a validated pattern that can configure a fleet of clusters with significantly less work than this reference architecture.
+* Hybrid Cloud Patterns are constantly updated by Red Hat Engineers supporting the project.
+* This reference architecture will not be updated.
+
+If you have existing multicluster set up and are looking for examples of other architectures, read on!
 
 ## Architecture Breakdown
 
@@ -175,6 +181,8 @@ For example, if an organization has 400 edge clusters for their stage environmen
 
 [AppProject Example]: https://github.com/hello-openshift-multicluster-gitops/gitops-dev/blob/main/values.yaml
 [Helm]: https://helm.sh/
+[Hybrid Cloud Patterns]: https://hybrid-cloud-patterns.io
+[Multicloud GitOps]: https://hybrid-cloud-patterns.io/patterns/multicloud-gitops
 [Red Hat Advanced Cluster Management (ACM) for Kubernetes]: https://www.redhat.com/en/technologies/management/advanced-cluster-management
 [Red Hat OpenShift Container Platform]: https://docs.openshift.com/container-platform/latest
 [Red Hat OpenShift GitOps (Argo CD)]: https://docs.openshift.com/container-platform/latest/cicd/gitops/gitops-release-notes.html
